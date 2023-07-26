@@ -1,0 +1,59 @@
+2023-07-24 08:26:41,122 [INFO    ] [config_reader.py:17] - /Users/virwali/Main-area-for-backups/viresh/my_work/Aark-Global/Citadel-IDP/vscode-all/Citadel-Webapp/config-files/local/citadel-web-config.ini
+2023-07-24 08:26:41,122 [INFO    ] [config_reader.py:19] - Reading app config from - /Users/virwali/Main-area-for-backups/viresh/my_work/Aark-Global/Citadel-IDP/vscode-all/Citadel-Webapp/config-files/local/citadel-web-config.ini
+2023-07-24 08:26:41,144 [INFO    ] [__init__.py:37] - Registering 'file_uploads' blueprint.
+2023-07-24 08:26:41,244 [INFO    ] [__init__.py:54] - Following routes registered successfully:
++------------------------------+------------------------------------+--------------------------------------------------------------+
+| Route                        | HTTP Methods                       | Handler                                                      |
++------------------------------+------------------------------------+--------------------------------------------------------------+
+| /citadel/receive_file_upload | {'POST', 'OPTIONS'}                | citadel_blueprint.file_uploads_blueprint.receive_file_upload |
+| /citadel/file_upload         | {'HEAD', 'GET', 'OPTIONS'}         | citadel_blueprint.file_uploads_blueprint.show_file_upload    |
+| /register                    | {'HEAD', 'GET', 'OPTIONS', 'POST'} | authentication_blueprint.register                            |
+| /logout                      | {'HEAD', 'GET', 'OPTIONS'}         | authentication_blueprint.logout                              |
+| /login                       | {'HEAD', 'GET', 'OPTIONS', 'POST'} | authentication_blueprint.login                               |
+| /index                       | {'HEAD', 'GET', 'OPTIONS'}         | home_blueprint.index                                         |
+| /                            | {'HEAD', 'GET', 'OPTIONS'}         | authentication_blueprint.route_default                       |
+| /static/<path:filename>      | {'HEAD', 'GET', 'OPTIONS'}         | static                                                       |
+| /<template>                  | {'HEAD', 'GET', 'OPTIONS'}         | home_blueprint.route_template                                |
++------------------------------+------------------------------------+--------------------------------------------------------------+
+2023-07-24 08:26:41,245 [INFO    ] [run.py:44] - App base directory: /Users/virwali/Main-area-for-backups/viresh/my_work/Aark-Global/Citadel-IDP/vscode-all/Citadel-Webapp
+2023-07-24 08:26:41,245 [INFO    ] [run.py:45] - App Env: local
+2023-07-24 08:26:41,245 [INFO    ] [run.py:46] - Flask Debug Mode: True
+2023-07-24 08:26:41,245 [INFO    ] [run.py:47] - Flask Page Compression: False
+2023-07-24 08:26:41,245 [INFO    ] [run.py:48] - Database Connection String: sqlite:////Users/virwali/Main-area-for-backups/viresh/my_work/Aark-Global/Citadel-IDP/vscode-all/Citadel-Webapp/apps/db.sqlite3
+2023-07-24 08:26:41,245 [INFO    ] [run.py:49] - Flask Asset Root: /static/assets
+2023-07-24 08:26:41,247 [INFO    ] [_internal.py:225] -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2023-07-24 08:26:48,338 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "GET /index HTTP/1.1" 200 -
+2023-07-24 08:26:48,471 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,472 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,473 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/jqvmap/jqvmap.min.css HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,473 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/fontawesome-free/css/all.min.css HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,474 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,474 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/css/adminlte.min.css HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,481 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/daterangepicker/daterangepicker.css HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,505 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/sparklines/sparkline.js HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,505 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,505 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/jquery/jquery.min.js HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,506 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/summernote/summernote-bs4.min.css HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,511 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/jqvmap/jquery.vmap.min.js HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,511 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/jqvmap/maps/jquery.vmap.usa.js HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,536 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/jquery-ui/jquery-ui.min.js HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,536 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/jquery-knob/jquery.knob.min.js HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,537 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/chart.js/Chart.min.js HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,546 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,546 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,570 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/js/demo.js HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,570 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/js/pages/dashboard.js HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,570 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/moment/moment.min.js HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,580 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/summernote/summernote-bs4.min.js HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,580 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/daterangepicker/daterangepicker.js HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,580 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/js/adminlte.js HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,599 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/fontawesome-free/webfonts/fa-solid-900.woff2 HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,599 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/plugins/fontawesome-free/webfonts/fa-regular-400.woff2 HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,616 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/img/user1-128x128.jpg HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,616 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/img/user8-128x128.jpg HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,616 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/img/user3-128x128.jpg HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,626 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/img/user7-128x128.jpg HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,627 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/img/AdminLTELogo.png HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,637 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/img/user5-128x128.jpg HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,638 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/img/user6-128x128.jpg HTTP/1.1[0m" 304 -
+2023-07-24 08:26:48,638 [INFO    ] [_internal.py:225] - 127.0.0.1 - - [24/Jul/2023 08:26:48] "[36mGET /static/assets/img/user2-160x160.jpg HTTP/1.1[0m" 304 -
