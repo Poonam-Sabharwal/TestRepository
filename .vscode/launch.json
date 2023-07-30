@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Citadel Webapp",
+            "name": "Python: Citadel Frontend",
             "type": "python",
             "request": "launch",
             "module": "flask",
