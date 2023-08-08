@@ -1,6 +1,8 @@
 import logging
 
 
+# TODO: add a separate file based log handler for werkzeug url access logs.
+# see https://stackoverflow.com/questions/42797276/flask-how-to-write-werkzeug-logs-to-log-file-using-rotatingfilehandler
 def configure_logging(logFileAbsPath):
     logging.basicConfig(
         level=logging.INFO,

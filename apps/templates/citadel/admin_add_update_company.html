@@ -1,0 +1,178 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Add New Company {% endblock %}
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini pace-primary {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+<!-- Select2 -->
+<link rel="stylesheet" href="/static/assets/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="/static/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Add New Company Details</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Citadel</a></li>
+            <li class="breadcrumb-item active">Add New Company</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+
+        <!-- left column -->
+        <div class="col-md-10">
+          <!-- general form elements -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Please Enter The Company Details</h3>
+            </div>
+            <!-- /.card-header -->
+
+            <!-- form start -->
+            <form name="add-update-company-form" id="add-update-company-form" action="" method="post">
+
+              {{ form.hidden_tag() }}
+
+              <div class="card-body">
+
+                <!-- Errors displayed here -->
+                {% if msg %}
+                {% if msg_type == "error" %}
+                <div class="alert alert-danger alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                  <h5><i class="icon fas fa-info"></i> Error!</h5>
+                  {{ msg | safe }}
+                </div>
+                {% endif %}
+                {% endif %}
+
+                <!-- Success msg displayed here -->
+                {% with messages = get_flashed_messages(category_filter=["success"]) %}
+                {% if messages %}
+                <div class="alert alert-success alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                  <h5><i class="icon fas fa-check"></i> Success!</h5>
+                  {% for msg in messages %}
+                  {{ msg }}
+                  {% endfor %}
+                </div>
+                </ul>
+                {% endif %}
+                {% endwith %}
+
+
+                <div class="card card-secondary">
+                  <div class="card-header">
+                    <h3 class="card-title">Company Name:</h3>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group">
+                      {{ form.full_name(placeholder="Full Company Name", class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                      {{ form.short_name(placeholder="Short Company Name", class="form-control") }}
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+
+                <div class="card card-secondary">
+                  <div class="card-header">
+                    <h3 class="card-title">Address Details:</h3>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group">
+                      {{ form.address_street_name_line_1(placeholder="Street Name 1", class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                      {{ form.address_street_name_line_2(placeholder="Street Name 2", class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                      {{ form.address_city(placeholder="City", class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                      {{ form.address_country(placeholder="Select a Country", class="form-control select2bs4", style="width: 100%;") }}
+                    </div>
+                    <div class="form-group">
+                      <select id="{{ form.address_state.id }}" name="{{ form.address_state.name }}"
+                        class="form-control select2bs4" style="width: 100%;"
+                        data-placeholder="Select Country and then Choose State">
+                        {% for option in form.address_state %}
+                        {{ option }}
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      {{ form.address_zip(placeholder="Zip", class="form-control") }}
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+
+                <div class="card-footer">
+                  <button type="submit" name="add-update-company-submit" class="btn btn-primary">Submit</button>
+                  &nbsp; &nbsp;
+                  <button type="reset" id="reset-button" class="btn btn-primary">Reset</button>
+                </div>
+            </form>
+          </div>
+          <!-- /.card -->
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<!-- jQuery -->
+<script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+<!-- jquery-validation -->
+<script src="/static/assets/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="/static/assets/plugins/jquery-validation/additional-methods.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- pace-progress -->
+<script src="/static/assets/plugins/pace-progress/pace.min.js"></script>
+<!-- Select2 -->
+<script src="/static/assets/plugins/select2/js/select2.full.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/static/assets/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<!-- <script src="/static/assets/js/demo.js"></script> -->
+
+<script src="/static/assets/js/citadel/add_update_company.js"></script>
+
+{% endblock javascripts %}

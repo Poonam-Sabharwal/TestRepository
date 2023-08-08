@@ -156,3 +156,5 @@ cython_debug/
 .vscode
 logs
 /*.log
+flask-session-store/*
+!flask-session-store/.gitkeep
