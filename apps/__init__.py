@@ -7,21 +7,20 @@ import os
 import logging
 
 from flask import Flask
+from flask_session import Session
 from flask_login import LoginManager
-from flask_sqlalchemy import SQLAlchemy
 from importlib import import_module
 from pathlib import Path
 from prettytable import PrettyTable
+import mongoengine as me
 
-from apps.common import config_reader
+from apps.common import config_reader, constants
+from apps.common.custom_exceptions import MissingConfigException
 
-
-db = SQLAlchemy()
 login_manager = LoginManager()
 
 
 def register_extensions(app):
-    db.init_app(app)
     login_manager.init_app(app)
 
 
@@ -54,26 +53,97 @@ def register_blueprints(app: Flask):
     logging.info("Following routes registered successfully:\n%s", pt.get_string())
 
 
+def setup_session(app):
+    app.config["SESSION_PERMANENT"] = False
+    app.config["SESSION_TYPE"] = "filesystem"
+    logging.info(
+        "Flask session store is: %s", (config_reader.config_data.get("Main", "app_base_dir") + "/flask-session-store")
+    )
+    app.config["SESSION_FILE_DIR"] = config_reader.config_data.get("Main", "app_base_dir") + "/flask-session-store"
+    session = Session()
+    session.init_app(app)
+
+
 def configure_database(app):
-    @app.before_first_request
-    def initialize_database():
-        try:
-            db.create_all()
-        except Exception as e:
-            print("> Error: DBMS Exception: " + str(e))
+    if config_reader.config_data.has_option("Main", "mongodb-connection-string"):
+        mongodb_conn_str = config_reader.config_data.get("Main", "mongodb-connection-string").strip('"')
+        logging.info("Using mongodb connection str -> '%s'", mongodb_conn_str)
+        me.connect(
+            host=mongodb_conn_str,
+            alias=constants.MONGODB_CONN_ALIAS,
+            appName=constants.MONGODB_CONN_ALIAS,
+            maxPoolSize=200,
+        )
+    else:
+        raise MissingConfigException("'mongodb-connection-string' config is missing.")
 
-            # fallback to SQLite
-            basedir = os.path.abspath(os.path.dirname(__file__))
-            app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(
-                basedir, "db.sqlite3"
-            )
 
-            print("> Fallback to SQLite ")
-            db.create_all()
+def __check_and_create_company_data():
+    # this import needs to be here to avoid a circular dependency on flask login_manager
+    from apps.models.company_model import CompanyModel, ContactNumber, ContactNumberType, CompanyAddress, AddressCountry
+    from apps.common import utils
 
-    @app.teardown_request
-    def shutdown_session(exception=None):
-        db.session.remove()
+    company: CompanyModel = CompanyModel.objects(full_name="AARK Global Inc.").first()
+    if company is None:
+        company_address = CompanyAddress(
+            street_name_line_1="794 Mcallister St",
+            street_name_line_2="",
+            address_city="San Francisco",
+            address_country=AddressCountry.US,
+            address_state=utils.us_states_dict["CA"],
+            address_zip="94102",
+        )
+        company = CompanyModel(
+            full_name="AARK Global Inc.",
+            short_name="AARK Global",
+            address=company_address,
+            contact_numbers=[
+                ContactNumber(number="+1-416-666-6666", type=ContactNumberType.MOBILE_1),
+                ContactNumber(number="+1-416-777-7777", type=ContactNumberType.MOBILE_2),
+            ],
+            is_active=True,
+            is_deleted=False,
+        )
+        company.save()
+        company.reload()
+        logging.info("Successfully created default company with full_name %s", company.full_name)
+    else:
+        logging.info("Company data already exists with full_name %s", company.full_name)
+
+
+def __check_and_create_aark_global_admin_user():
+    # this import needs to be here to avoid a circular dependency on flask login_manager
+    from apps.models.user_model import UserModel, UserRole, UserType, UserSalutationTypes
+    from apps.models.company_model import CompanyModel
+
+    user: UserModel = UserModel.objects(email="test@test.com").first()
+    if user is None:
+        company: CompanyModel = CompanyModel.objects(full_name="AARK Global Inc.").first()
+        user = UserModel(
+            salutation=UserSalutationTypes.Mr,
+            first_name="Test First Name",
+            middle_name="",
+            last_name="Test Last Name",
+            email="test@test.com",
+            password="pass",
+            user_type=UserType.AARK_GLOBAL,
+            company=company,
+            is_active=True,
+            is_deleted=False,
+            roles=[UserRole.ADMIN],
+        )
+        user.save()
+        user.reload()
+        logging.info("Successfully created AARK Global Admin user with email %s and row_id %s", user.email, user.id)
+    else:
+        logging.info("AARK Global Admin user already exists with email %s and row_id %s", user.email, user.id)
+
+
+def check_and_load_initial_data():
+    logging.info("Starting initial data load....")
+    __check_and_create_company_data()
+    __check_and_create_aark_global_admin_user()
+    logging.info("Finished initial data load....")
 
 
 def create_app(config):
@@ -81,5 +151,7 @@ def create_app(config):
     app.config.from_object(config)
     register_extensions(app)
     register_blueprints(app)
+    setup_session(app)
     configure_database(app)
+    check_and_load_initial_data()
     return app
