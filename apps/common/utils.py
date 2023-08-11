@@ -90,17 +90,35 @@ ca_states_dict = {
     "YT": "Yukon",
 }
 
-def connect_str():
-    if not config_reader.config_data.has_option("Main", "azure-storage-account-connection-str"):
-        raise MissingConfigException("Main.azure-storage-account-connection-str is missing in config.")
-    azure_storage_account_connection_str = config_reader.config_data.get("Main", "azure-storage-account-connection-str")
-    if not string_is_not_empty(azure_storage_account_connection_str):
-        raise MissingConfigException("Main.azure-storage-account-connection-str is present but has empty value.")
-    if azure_storage_account_connection_str.startswith(("'", '"')) and azure_storage_account_connection_str.endswith(
-        ("'", '"')
-    ):
-        azure_storage_account_connection_str = azure_storage_account_connection_str.strip("'\"")
-    return azure_storage_account_connection_str
+def get_connection_string():
+    """
+    Removes " " from starting and end of the string.
+
+    Return:
+        returns connection string
+    """
+    if is_env_local() == True:
+        if not config_reader.config_data.has_option("Main", "azurite-storage-account-connection-str"):
+            raise MissingConfigException("Main.azure-storage-account-connection-str is missing in config.")
+
+        connection_string = config_reader.config_data.get("Main", "azurite-storage-account-connection-str")
+
+        if not string_is_not_empty(connection_string):
+            raise MissingConfigException("Main.azurite-storage-account-connection-str is present but has empty value.")
+
+    else:
+        if not config_reader.config_data.has_option("Main", "azure-storage-account-connection-str"):
+            raise MissingConfigException("Main.azure-storage-account-connection-str is missing in config.")
+
+        connection_string = config_reader.config_data.get("Main", "azure-storage-account-connection-str")
+
+        if not string_is_not_empty(connection_string):
+            raise MissingConfigException("Main.azure-storage-account-connection-str is present but has empty value.")
+
+    if connection_string.startswith(("'", '"')) and connection_string.endswith(("'", '"')):
+        connection_string = connection_string.strip("'\"")
+
+    return connection_string
 
 
 def string_is_not_empty(input_str):
@@ -180,7 +198,7 @@ def blob_service_client():
     Returns:
         BobServiceClient
     """
-    return BlobServiceClient.from_connection_string(connect_str())
+    return BlobServiceClient.from_connection_string(get_connection_string())
 
 def container_client():
     """
@@ -204,22 +222,20 @@ def get_metadata(status: str, path: str):
     blob_client = container_client().get_blob_client(path)
     properties = blob_client.get_blob_properties()
 
-    md = Metadata()
+    metadata = Metadata()
     
-    md.status = f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}-{status}]"
-    md.name = properties.name
-    md.content_md5 = base64.b64encode(properties.content_settings.content_md5).decode("utf-8")
-    md.url = blob_client.url
-    md.blob_type = properties.blob_type
-    md.container = container_client().container_name
-    md.content_length = properties.size
-    md.created = properties.creation_time.strftime("%Y-%m-%d %H:%M:%S")
-    md.last_modified = properties.last_modified.strftime("%Y-%m-%d %H:%M:%S")
-    md.content_type = properties.content_settings.content_type
-    
-    return md
+    metadata.status = f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}-{status}]"
+    metadata.name = properties.name
+    metadata.content_md5 = base64.b64encode(properties.content_settings.content_md5).decode("utf-8")
+    metadata.url = blob_client.url
+    metadata.blob_type = properties.blob_type
+    metadata.container = container_client().container_name
+    metadata.content_length = properties.size
+    metadata.created = properties.creation_time.strftime("%Y-%m-%d %H:%M:%S")
+    metadata.last_modified = properties.last_modified.strftime("%Y-%m-%d %H:%M:%S")
+    metadata.content_type = properties.content_settings.content_type
+    return metadata
 
-############################################
 
 
 
