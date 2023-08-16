@@ -1,11 +1,12 @@
 import logging
 from datetime import datetime
 import os
-from apps.common import config_reader,constants
-from apps.common.custom_exceptions import MissingDocumentTypeException,MissingConfigException
+from apps.common import config_reader, constants
+from apps.common.custom_exceptions import MissingDocumentTypeException, MissingConfigException
 import base64
-from common.data_objects import Metadata
+from apps.common.data_objects import Metadata
 from azure.storage.blob import BlobServiceClient
+
 countries_dict = {
     "-1": "Select a Country",
     "US": "United States",
@@ -90,6 +91,7 @@ ca_states_dict = {
     "YT": "Yukon",
 }
 
+
 def get_connection_string():
     """
     Removes " " from starting and end of the string.
@@ -130,7 +132,7 @@ def is_env_local():
         env = config_reader.config_data.get("Main", "env")
     else:
         env = "local"
-        
+
     return env.lower() == "local".lower()
 
 
@@ -190,7 +192,8 @@ def get_document_type_from_file_name(file_path):
         msg = f"Could not find form recognizer model for document type {document_type} inferred form file name path {file_path}."
         logging.error(msg)
         raise MissingDocumentTypeException(msg)
-    
+
+
 def blob_service_client():
     """
     blob_service_client calls BobServiceClient
@@ -200,6 +203,7 @@ def blob_service_client():
     """
     return BlobServiceClient.from_connection_string(get_connection_string())
 
+
 def container_client():
     """
     container_client calls ContainerClient
@@ -208,6 +212,7 @@ def container_client():
         ContainerClient
     """
     return blob_service_client().get_container_client(constants.DEFAULT_BLOB_CONTAINER)
+
 
 def get_metadata(status: str, path: str):
     """
@@ -223,7 +228,7 @@ def get_metadata(status: str, path: str):
     properties = blob_client.get_blob_properties()
 
     metadata = Metadata()
-    
+
     metadata.status = f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}-{status}]"
     metadata.name = properties.name
     metadata.content_md5 = base64.b64encode(properties.content_settings.content_md5).decode("utf-8")
@@ -234,12 +239,5 @@ def get_metadata(status: str, path: str):
     metadata.created = properties.creation_time.strftime("%Y-%m-%d %H:%M:%S")
     metadata.last_modified = properties.last_modified.strftime("%Y-%m-%d %H:%M:%S")
     metadata.content_type = properties.content_settings.content_type
+
     return metadata
-
-
-
-
-
-
-
-
