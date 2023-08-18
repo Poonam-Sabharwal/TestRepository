@@ -7,6 +7,28 @@ import base64
 from apps.common.data_objects import Metadata
 from azure.storage.blob import BlobServiceClient
 
+# dicts for forms
+user_salutations_dict = {
+    "Mr.": "Mr.",
+    "Miss.": "Miss.",
+    "Mrs.": "Mrs.",
+    "Dr.": "Dr.",
+}
+
+user_type_dict = {
+    "-1": "Select User Type",
+    "AARK_GLOBAL": "AARK_GLOBAL",
+    "CLIENT": "CLIENT",
+}
+
+user_role_dict = {
+    "-1": "Select User Role",
+    "ADMIN": "ADMIN",  # AARK global admin user
+    "NORMAL": "NORMAL",  # AARK global normal user
+    "CLIENT_ADMIN": "CLIENT_ADMIN",  # Client admin user
+    "CLIENT_NORMAL": "CLIENT_NORMAL",  # Client normal user
+}
+
 countries_dict = {
     "-1": "Select a Country",
     "US": "United States",
