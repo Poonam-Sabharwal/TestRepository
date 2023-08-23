@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 from azure.storage.blob import BlobServiceClient, BlobType, BlobClient, ContentSettings
 from concurrent.futures import ThreadPoolExecutor
 from apps.common import utils, constants
-
+from apps.common.utils import save_input_blob_to_mongodb
 
 # Azurite Emulator configuration
 azurite_connection_string = utils.get_connection_string()
@@ -73,5 +73,5 @@ def handle_seq(request: Request) -> Response:
         logging.info("File %s has been uploaded successfully.", file_data.filename)
     else:
         logging.info("Chunk %s of %s for file %s complete", current_chunk + 1, total_chunks, file_data.filename)
-
+    save_input_blob_to_mongodb(status=subfolder_name, path=blob_path)
     return make_response(("Chunk upload successful", 200))
