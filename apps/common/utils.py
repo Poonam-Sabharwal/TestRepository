@@ -122,13 +122,13 @@ def get_connection_string():
         returns connection string
     """
     if is_env_local() == True:
-        if not config_reader.config_data.has_option("Main", "azurite-storage-account-connection-str"):
+        if not config_reader.config_data.has_option("Main", "azure-storage-account-connection-str"):
             raise MissingConfigException("Main.azure-storage-account-connection-str is missing in config.")
 
-        connection_string = config_reader.config_data.get("Main", "azurite-storage-account-connection-str")
+        connection_string = config_reader.config_data.get("Main", "azure-storage-account-connection-str")
 
         if not string_is_not_empty(connection_string):
-            raise MissingConfigException("Main.azurite-storage-account-connection-str is present but has empty value.")
+            raise MissingConfigException("Main.azure-storage-account-connection-str is present but has empty value.")
 
     else:
         if not config_reader.config_data.has_option("Main", "azure-storage-account-connection-str"):
