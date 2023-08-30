@@ -54,7 +54,7 @@ def blob_validator(blobpath: str, container_client: ContainerClient):
     blob_client = container_client.get_blob_client(blobpath)
     properties = blob_client.get_blob_properties()
 
-    if properties.size <= 5000000:
+    if properties.size <= 500000000:
         if not (
             ".exe" in properties.name.lower()
             or ".bat" in properties.name.lower()
