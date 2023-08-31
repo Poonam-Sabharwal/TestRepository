@@ -49,3 +49,9 @@ class CitadelDBException(CitadelIDPWebException):
     """
     Exception to be raised for all DB related operations.
     """
+
+
+class MissingFolderException(CitadelIDPWebException):
+    """
+    Exception to be raised for all DB related operations.
+    """
