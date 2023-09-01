@@ -3,12 +3,12 @@ import logging
 from azure.storage.blob import ContainerClient
 from apps.common.custom_exceptions import MissingFolderException
 
+container_client = utils.get_azure_storage_blob_container_client(constants.DEFAULT_BLOB_CONTAINER)
 
 def check_and_process_blob():
     """
     check_and_process_blob _summary_
     """
-    container_client = utils.get_azure_storage_blob_container_client(constants.DEFAULT_BLOB_CONTAINER)
     input_blobs_list = []
     company_blobs_list = [
         path.name for path in container_client.list_blobs(name_starts_with=constants.COMPANY_ROOT_FOLDER_PREFIX)
@@ -26,7 +26,7 @@ def check_and_process_blob():
         logging.info("incoming-file folder is empty")
     for incoming_blob in incoming_blobs_list:
         logging.info(f"Blob '{incoming_blob}' is getting validated")
-        input_blobs_list.append(blob_validator(incoming_blob, container_client))
+        input_blobs_list.append(blob_validator(incoming_blob))
 
     validation_successful_blobs_list = [item for item in input_blobs_list if item is not None]
     for blob_path in validation_successful_blobs_list:
@@ -38,10 +38,10 @@ def check_and_process_blob():
     ]
     for blob_path in validation_failed_blobs_list:
         logging.info(f"{blob_path} is not valid. Moving to validation_failed folder")
-        move_blob_to_validation_successful(blob_path, constants.DEFAULT_VALIDATION_FAILED_SUBFOLDER, container_client)
+        move_blob_to_validation_successful(blob_path, constants.DEFAULT_VALIDATION_FAILED_SUBFOLDER)
 
 
-def blob_validator(blobpath: str, container_client: ContainerClient):
+def blob_validator(blobpath: str):
     """
     blob_validator _summary_
 
@@ -70,7 +70,7 @@ def blob_validator(blobpath: str, container_client: ContainerClient):
             return blobpath
 
 
-def move_blob_to_validation_successful(blob_path: str, destination_folder: str, container_client: ContainerClient):
+def move_blob_to_validation_successful(blob_path: str, destination_folder: str):
     """
     copy_blob_to_validation_successful _summary_
 
