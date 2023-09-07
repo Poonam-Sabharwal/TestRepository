@@ -153,8 +153,8 @@ cython_debug/
 
 .DS_Store
 .vscode
-logs
-/*.log
+logs/*
+!logs/.gitkeep
 flask-session-store/*
 !flask-session-store/.gitkeep
 uploaded_file_storage/*
