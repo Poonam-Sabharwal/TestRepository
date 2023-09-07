@@ -1,4 +1,5 @@
 aniso8601==9.0.1
+APScheduler==3.10.4
 astroid==2.15.6
 attrs==23.1.0
 azure-core==1.29.2
@@ -64,6 +65,7 @@ rpds-py==0.8.10
 six==1.16.0
 tomlkit==0.11.8
 typing_extensions==4.7.1
+tzlocal==5.0.1
 urllib3==2.0.4
 wcwidth==0.2.6
 Werkzeug==2.0.3
