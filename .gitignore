@@ -157,3 +157,5 @@ logs
 /*.log
 flask-session-store/*
 !flask-session-store/.gitkeep
+uploaded_file_storage/*
+!uploaded_file_storage/.gitkeep
