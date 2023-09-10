@@ -1,0 +1,15 @@
+version: '3.2'
+services:
+  frontend:
+    image: citadel:ftest
+    container_name: suspicious-citru
+    # environment:
+    env_file:
+      - ./config-files/local-docker2/.env
+
+    volumes:
+      - ./config-files:/app/config-files
+    
+    ports:
+    - "8080:8080"
+ 

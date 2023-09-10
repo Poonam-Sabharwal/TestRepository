@@ -23,6 +23,4 @@ RUN rm -rf ./.venv                                                              
 EXPOSE 8080
 
 # configure the container to run in an executed manner
-#ENTRYPOINT [ "flask", "run", "--host=0.0.0.0", "--port=5000" ]
-#ENTRYPOINT [ "bash" ]
 ENTRYPOINT [ "gunicorn", "--config", "gunicorn.conf.py", "-e", "env=${APP_ENV}", "run:app" ]
