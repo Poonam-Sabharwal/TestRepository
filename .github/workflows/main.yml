@@ -1,0 +1,37 @@
+name: New Workflow
+
+on:
+  push:
+    branches:
+      - ci-cd  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+
+      - name: Run pylint
+        run: |
+          pylint .
+        continue-on-error: true  
+
+     - name: Run tests
+        run: pytest 
+     
+      -name: Build and push Docker image
+        uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: citadel:ftest  
+
+   
