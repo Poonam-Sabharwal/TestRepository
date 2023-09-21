@@ -1,37 +1,38 @@
-name: test workflow
+name: Test Workflow
 
 # Controls when the workflow will run
 on:
-# Triggers the workflow on push or pull request events but only for the "main " branch
-push:
-  branches: ["main" ]
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches:
+      - main
 
-pull_request: 
-  branches: [ "main" ]
+  pull_request:
+    branches:
+      - main
 
-#Allows  to run this workflow manually from the Actions tab
-
-workflow_dispatch:
-  inputs:
-    username:
-      description: "give me your username"
-      default : "citadel"
-      type: "string"
+  # Allows running this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      username:
+        description: "Give me your username"
+        default: "citadel"
+        type: "string"
 
 jobs:
-  
   job1:
     runs-on: ubuntu-latest
 
-steps:
-    -name: print user provided parameter
-    run: |
-        echo The username is  ${{ inputs.username }}
-        -name: print variable
-    env:
-        NAME: "citadel"
+    steps:
+      - name: Print user-provided parameter
         run: |
-        echo Variable name is: $NAME
+          echo "The username is ${{ inputs.username }}"
+
+      - name: Print variable
+        env:
+          NAME: "citadel"
+        run: |
+          echo "Variable name is: $NAME"
 
 # job2:
 #       runs-on: ubuntu-latest
